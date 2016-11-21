@@ -68,6 +68,8 @@
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
         </config-file>
         <config-file target="AndroidManifest.xml" parent="application">
           <provider
@@ -80,12 +82,28 @@
                   android:resource="@xml/provider_paths"/>
           </provider>
         </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+          <activity
+              android:label="nativecameraplugin"
+              android:name="org.apache.cordova.camera.CustomCameraActivity"
+              android:screenOrientation="portrait"
+              android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+          </activity>
+        </config-file>
 
         <source-file src="src/android/CameraLauncher.java" target-dir="src/org/apache/cordova/camera" />
+        <source-file src="src/android/CustomCameraActivity.java" target-dir="src/org/apache/cordova/camera" />
         <source-file src="src/android/CordovaUri.java" target-dir="src/org/apache/cordova/camera" />
         <source-file src="src/android/FileHelper.java" target-dir="src/org/apache/cordova/camera" />
         <source-file src="src/android/ExifHelper.java" target-dir="src/org/apache/cordova/camera" />
+        <source-file src="src/android/xml/customcamera.xml" target-dir="res/layout" />
         <source-file src="src/android/xml/provider_paths.xml" target-dir="res/xml" />
+        <source-file src="src/android/res/btn_shot.png" target-dir="res/drawable" />
+        <source-file src="src/android/res/btn_flip.png" target-dir="res/drawable" />
+        <source-file src="src/android/res/btn_flash_on.png" target-dir="res/drawable" />
+        <source-file src="src/android/res/btn_flash_no.png" target-dir="res/drawable" />
+        <source-file src="src/android/res/btn_flash_auto.png" target-dir="res/drawable" />
+        <source-file src="src/android/res/viewfinder.png" target-dir="res/drawable" />
 
         <js-module src="www/CameraPopoverHandle.js" name="CameraPopoverHandle">
             <clobbers target="CameraPopoverHandle" />
