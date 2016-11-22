@@ -22,6 +22,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -57,6 +58,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -119,6 +121,38 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
     private ExifHelper exifData;            // Exif data from source
     private String applicationId;
 
+    private static String TAG="BuildHelper";
+
+    /*
+     * This needs to be implemented if you wish to use the Camera Plugin or other plugins
+     * that read the Build Configuration.
+     *
+     * Thanks to Phil@Medtronic and Graham Borland for finding the answer and posting it to
+     * StackOverflow.  This is annoying as hell!  However, this method does not work with
+     * ProGuard, and you should use the config.xml to define the application_id
+     *
+     */
+
+    public static Object getBuildConfigValue(Context ctx, String key)
+    {
+        try
+        {
+            Class<?> clazz = Class.forName(ctx.getPackageName() + ".BuildConfig");
+            Field field = clazz.getField(key);
+            return field.get(null);
+        } catch (ClassNotFoundException e) {
+            LOG.d(TAG, "Unable to get the BuildConfig, is this built with ANT?");
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            LOG.d(TAG, key + " is not a valid field. Check your build.gradle");
+        } catch (IllegalAccessException e) {
+            LOG.d(TAG, "Illegal Access Exception: Let's print a stack trace.");
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     /**
      * Executes the request and returns PluginResult.
@@ -132,7 +166,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         this.callbackContext = callbackContext;
         //Adding an API to CoreAndroid to get the BuildConfigValue
         //This allows us to not make this a breaking change to embedding
-        this.applicationId = (String) BuildHelper.getBuildConfigValue(cordova.getActivity(), "APPLICATION_ID");
+        this.applicationId = (String) getBuildConfigValue(cordova.getActivity(), "APPLICATION_ID");
         this.applicationId = preferences.getString("applicationId", this.applicationId);
 
 
