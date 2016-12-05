@@ -84,9 +84,7 @@
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
           <activity
-              android:label="nativecameraplugin"
               android:name="org.apache.cordova.camera.custom.CustomCameraActivity"
-              android:screenOrientation="portrait"
               android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
           </activity>
         </config-file>
