@@ -14,6 +14,7 @@ import android.hardware.Camera.ShutterCallback;
 import android.hardware.Camera.Size;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.OrientationEventListener;
 import android.view.Surface;
@@ -285,9 +286,9 @@ public class CameraFragment extends Fragment implements OnClickListener {
 
         Bitmap rotatedBitmap = BitmapUtils.rotateBitmap(bitmapCompressed, mOrientationDegrees);
 
-        Bitmap roundedBitmap = BitmapUtils.drawAsRoundedCornerImage(rotatedBitmap);
+        //Bitmap roundedBitmap = BitmapUtils.drawAsRoundedCornerImage(rotatedBitmap);
 
-        mPictureTakenListener.onPictureTaken(roundedBitmap);
+        mPictureTakenListener.onPictureTaken(rotatedBitmap);
 
         mOrientationListener.disable();
 
@@ -298,9 +299,12 @@ public class CameraFragment extends Fragment implements OnClickListener {
 
     @Override
     public void onClick(View v) {
+        mDialog = new ProgressDialog(new ContextThemeWrapper(this.getActivity(),
+                android.R.style.Theme_Holo_Light_Dialog));
+        mDialog.setMessage("Processando");
+        mDialog.setCancelable(false);
+        mDialog.show();
         mCamera.takePicture(shutterCallback, null, mPhotoCallback);
-        mDialog = ProgressDialog.show(getActivity(), "",
-                "Processando");
     }
 
     private final ShutterCallback shutterCallback = new ShutterCallback() {
