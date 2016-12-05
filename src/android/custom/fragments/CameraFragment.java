@@ -304,6 +304,7 @@ public class CameraFragment extends Fragment implements OnClickListener {
         mDialog.setMessage("Processando");
         mDialog.setCancelable(false);
         mDialog.show();
+
         mCamera.takePicture(shutterCallback, null, mPhotoCallback);
     }
 
@@ -316,7 +317,13 @@ public class CameraFragment extends Fragment implements OnClickListener {
 
     private final Camera.PictureCallback mPhotoCallback = new Camera.PictureCallback() {
         public void onPictureTaken(final byte[] data, final Camera camera) {
-            onPictureTake(data);
+            mCamera.stopPreview();
+            new Thread() {
+                @Override
+                public void run() {
+                    onPictureTake(data);
+                }
+            }.start();
         }
     };
 
