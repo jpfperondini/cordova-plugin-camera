@@ -270,7 +270,9 @@ public class CameraFragment extends Fragment implements OnClickListener {
 
         BitmapUtils.setDpi(data, ImageSettings.DENSITY);
 
-        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 4;
+        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, ImageSettings.JPEG_QUALITY, baos);
