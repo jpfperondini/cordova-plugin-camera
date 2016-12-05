@@ -85,18 +85,32 @@
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
           <activity
               android:label="nativecameraplugin"
-              android:name="org.apache.cordova.camera.CustomCameraActivity"
+              android:name="org.apache.cordova.camera.custom.CustomCameraActivity"
               android:screenOrientation="portrait"
               android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
           </activity>
         </config-file>
 
         <source-file src="src/android/CameraLauncher.java" target-dir="src/org/apache/cordova/camera" />
-        <source-file src="src/android/CustomCameraActivity.java" target-dir="src/org/apache/cordova/camera" />
+        <source-file src="src/android/custom/BitmapUtils.java" target-dir="src/org/apache/cordova/camera/custom" />
+        <source-file src="src/android/custom/CustomCameraActivity.java" target-dir="src/org/apache/cordova/camera/custom" />
+        <source-file src="src/android/custom/FakeR.java" target-dir="src/org/apache/cordova/camera/custom" />
+        <source-file src="src/android/custom/ImageSettings.java" target-dir="src/org/apache/cordova/camera/custom" />
+        <source-file src="src/android/custom/fragments/CameraFragment.java" target-dir="src/org/apache/cordova/camera/custom/fragments" />
+        <source-file src="src/android/custom/fragments/ConfirmationFragment.java" target-dir="src/org/apache/cordova/camera/custom/fragments" />
+        <source-file src="src/android/custom/listeners/ConfirmationListener.java" target-dir="src/org/apache/cordova/camera/custom/listeners" />
+        <source-file src="src/android/custom/listeners/PictureTakenListener.java" target-dir="src/org/apache/cordova/camera/custom/listeners" />
         <source-file src="src/android/CordovaUri.java" target-dir="src/org/apache/cordova/camera" />
         <source-file src="src/android/FileHelper.java" target-dir="src/org/apache/cordova/camera" />
         <source-file src="src/android/ExifHelper.java" target-dir="src/org/apache/cordova/camera" />
-        <source-file src="src/android/xml/customcamera.xml" target-dir="res/layout" />
+        <source-file src="src/android/xml/dimens.xml" target-dir="res/values" />
+        <source-file src="src/android/xml/activity_main.xml" target-dir="res/layout" />
+        <source-file src="src/android/xml/custom_camera.xml" target-dir="res/layout" />
+        <source-file src="src/android/xml/fragment_camera.xml" target-dir="res/layout" />
+        <source-file src="src/android/xml/fragment_confirmation.xml" target-dir="res/layout" />
+        <source-file src="src/android/xml/scan_layout.xml" target-dir="res/layout" />
+        <source-file src="src/android/xml/fragment_camera.xml" target-dir="res/layout-land" />
+        <source-file src="src/android/xml/fragment_confirmation.xml" target-dir="res/layout-land" />
         <source-file src="src/android/xml/provider_paths.xml" target-dir="res/xml" />
         <source-file src="src/android/res/btn_shot.png" target-dir="res/drawable" />
         <source-file src="src/android/res/btn_flip.png" target-dir="res/drawable" />
@@ -104,6 +118,8 @@
         <source-file src="src/android/res/btn_flash_no.png" target-dir="res/drawable" />
         <source-file src="src/android/res/btn_flash_auto.png" target-dir="res/drawable" />
         <source-file src="src/android/res/viewfinder.png" target-dir="res/drawable" />
+        <source-file src="src/android/res/btn_check.png" target-dir="res/drawable" />
+        <source-file src="src/android/res/button_background.xml" target-dir="res/drawable" />
 
         <js-module src="www/CameraPopoverHandle.js" name="CameraPopoverHandle">
             <clobbers target="CameraPopoverHandle" />

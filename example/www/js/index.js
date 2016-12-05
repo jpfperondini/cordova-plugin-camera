@@ -18,7 +18,8 @@ var app = {
 						saveToPhotoAlbum: false,
 						cameraDirection: 1,
 						correctOrientation:true,
-						toggleCamera: true
+						toggleCamera: true,
+            useCustomCamera: true
 					};
 					navigator.camera.getPicture(function(imageData) {
              console.log(imageData)

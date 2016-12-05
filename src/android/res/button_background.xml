@@ -1,0 +1,27 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/button_background_item0">
+        <shape>
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+    <item android:id="@+id/button_background_item1">
+        <shape>
+            <padding android:top="1dp" android:right="1dp" android:bottom="1dp" android:left="1dp" />
+            <solid android:color="#00579E" />
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+    <!-- Background -->
+    <item android:id="@+id/button_background_item2">
+        <shape >
+            <solid android:color="@android:color/white" />
+            <!-- 	        <gradient
+                            android:startColor="@color/button_bp_main_start_color"
+                            android:endColor="@color/button_bp_main_end_color"
+                            android:type="linear"
+                            android:angle="270"
+                            />	 -->
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+</layer-list>
