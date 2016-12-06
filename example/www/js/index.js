@@ -19,6 +19,7 @@ var app = {
 						cameraDirection: 1,
 						correctOrientation:true,
 						toggleCamera: true,
+						previewOverlay: false,
             useCustomCamera: true
 					};
 					navigator.camera.getPicture(function(imageData) {

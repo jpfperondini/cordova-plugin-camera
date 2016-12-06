@@ -23,14 +23,20 @@ import java.io.IOException;
 public class CustomCameraActivity extends Activity implements PictureTakenListener, ConfirmationListener {
 
     private static final String TAG = CustomCameraActivity.class.getName();
+    public static final String PREVIEW_OVERLAY = "previewOverlay";
 
     private Uri mUriOutput;
     private FakeR fakeR;
+    private boolean previewOverlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        if (this.getIntent().getExtras().containsKey(PREVIEW_OVERLAY)) {
+            previewOverlay = this.getIntent().getExtras().getBoolean(PREVIEW_OVERLAY);
+        } else previewOverlay = false;
+
         fakeR = new FakeR(this);
 
         setContentView(fakeR.getId("layout", "scan_layout"));
@@ -60,6 +66,7 @@ public class CustomCameraActivity extends Activity implements PictureTakenListen
         ConfirmationFragment fragment = new ConfirmationFragment();
 
         fragment.setOriginalBitmap(bitmap);
+        fragment.setPreviewOverlay(previewOverlay);
 
         android.app.FragmentManager fragmentManager = getFragmentManager();
 
@@ -92,7 +99,7 @@ public class CustomCameraActivity extends Activity implements PictureTakenListen
 
         byte[] imageData = baos.toByteArray();
 
-        CordovaUri cordovaUri =  new CordovaUri(mUriOutput);
+        CordovaUri cordovaUri = new CordovaUri(mUriOutput);
 
         File pictureFile = new File(cordovaUri.getFilePath());
         try {

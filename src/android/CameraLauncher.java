@@ -109,7 +109,8 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
     private boolean correctOrientation;     // Should the pictures orientation be corrected
     private boolean orientationCorrected;   // Has the picture's orientation been corrected
     private boolean allowEdit;              // Should we allow the user to crop the image.
-    private boolean useCustomCamera;// Use the custom camera activity
+    private boolean useCustomCamera;        // Use the custom camera activity
+    private boolean previewOverlay;         // Add overlay to preview
 
     protected final static String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
@@ -122,7 +123,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
     private ExifHelper exifData;            // Exif data from source
     private String applicationId;
 
-    private static String TAG="BuildHelper";
+    private static String TAG = "BuildHelper";
 
     /*
      * This needs to be implemented if you wish to use the Camera Plugin or other plugins
@@ -134,10 +135,8 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
      *
      */
 
-    public static Object getBuildConfigValue(Context ctx, String key)
-    {
-        try
-        {
+    public static Object getBuildConfigValue(Context ctx, String key) {
+        try {
             Class<?> clazz = Class.forName(ctx.getPackageName() + ".BuildConfig");
             Field field = clazz.getField(key);
             return field.get(null);
@@ -181,6 +180,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
             this.mediaType = PICTURE;
             this.mQuality = 50;
             this.useCustomCamera = false;
+            this.previewOverlay = false;
 
             //Take the values from the arguments if they're not already defined (this is tricky)
             this.destType = args.getInt(1);
@@ -194,6 +194,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
             this.correctOrientation = args.getBoolean(8);
             this.saveToPhotoAlbum = args.getBoolean(9);
             this.useCustomCamera = args.getBoolean(12);
+            this.previewOverlay = args.getBoolean(13);
 
             // If the user specifies a 0 or smaller width/height
             // make it -1 so later comparisons succeed
@@ -348,6 +349,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
 
     private Intent getCustomCameraIntent(int encodingType) {
         Intent intent = new Intent(this.cordova.getActivity(), CustomCameraActivity.class);
+        intent.putExtra(CustomCameraActivity.PREVIEW_OVERLAY, previewOverlay);
 
         return intent;
     }

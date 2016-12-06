@@ -1,4 +1,3 @@
-
 package org.apache.cordova.camera.custom.fragments;
 
 import android.app.Fragment;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import org.apache.cordova.camera.custom.BitmapUtils;
 import org.apache.cordova.camera.custom.FakeR;
 import org.apache.cordova.camera.custom.listeners.ConfirmationListener;
 
@@ -27,6 +27,7 @@ public class ConfirmationFragment extends Fragment {
 
     private Bitmap mOriginal;
     private FakeR fakeR;
+    private boolean previewOverlay = false;
 
     @Override
     public void onAttach(Context context) {
@@ -69,11 +70,19 @@ public class ConfirmationFragment extends Fragment {
      * Configure image to show in scan fragment (rotate, resize, scale...)
      */
     private void configureBitmapToView() {
-        mSourceImageView.setImageBitmap(mOriginal);
+        if (previewOverlay) {
+            mSourceImageView.setImageBitmap(BitmapUtils.drawAsRoundedCornerImage(mOriginal));
+        } else {
+            mSourceImageView.setImageBitmap(mOriginal);
+        }
     }
 
     public void setOriginalBitmap(Bitmap bitmap) {
         mOriginal = bitmap;
+    }
+
+    public void setPreviewOverlay(boolean previewOverlay) {
+        this.previewOverlay = previewOverlay;
     }
 
     private class ConfirmButtonClickListener implements OnClickListener {
